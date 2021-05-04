@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Enigma Vault Advanced iFrame Demo</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body style="padding: 2rem; min-width: 320px;background-color: #f7ecb6">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1 style="margin-bottom: 2rem;">Enigma Vault Advanced iFrame Demo</h1>
+				<p style="margin-bottom: 2rem;">Get a store form sessionId from the API first with embedFormForControl set to true. Tan: parent. White: Enigma Vault iframe.</p>
+				<hr style="margin-bottom: 2rem;">
+				<div class="embed-responsive embed-responsive-16by9" style="border: 1px solid rgba(0,0,0,.1); border-radius: 0.25rem; max-width: 375px;">
+					<!-- Change out the url with the url provided by the API -->
+					<iframe id="evFrame" class="embed-responsive-item" src="https://api.enigmavault.io/cardvault/public/v1.3/store/cvv/index.html?sessionId=YOUR SESSION ID GOES HERE"></iframe>
+				</div>
+			</div>
+		</div>
+		<br />
+		<button type="button" onclick="submitEv()" class="btn btn-primary">Submit</button>
+	</div>
+	<script type="text/javascript">
+		if (window.addEventListener) {
+			window.addEventListener("message", handleMessage);
+		} else {
+			window.attachEvent("onmessage", handleMessage);
+		}
+		
+		function submitEv() {
+			var iFrame = document.getElementById('evFrame');
+			//Change out the url with the url provided by the API
+			iFrame.contentWindow.postMessage("submit", "https://api.enigmavault.io/cardvault/public/v1.3/store/cvv/index.html?sessionId=YOUR SESSION ID GOES HERE");
+		}
+
+		function handleMessage(event) {
+			if (event.origin == "https://api.enigmavault.io") {
+				var evData = event.data;
+				console.log(evData);
+			}
+		}
+	</script>
+</body>
+</html>
